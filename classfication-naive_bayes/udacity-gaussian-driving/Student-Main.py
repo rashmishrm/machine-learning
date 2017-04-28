@@ -7,7 +7,7 @@
     boundary found in the lesson video, and make a plot that
     visually shows the decision boundary """
 
-
+from sklearn.metrics import accuracy_score
 from prep_terrain_data import makeTerrainData
 from class_vis import prettyPicture, output_image
 from ClassifyNB import classify

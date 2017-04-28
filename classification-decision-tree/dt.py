@@ -9,19 +9,9 @@ import pylab as pl
 from class_vis import prettyPicture, output_image
 
 features_train, labels_train, features_test, labels_test = makeTerrainData()
-
-
-########################## SVM #################################
-### we handle the import statement and SVC creation for you here
-from sklearn.svm import SVC
-clf = SVC(kernel="rbf",C=1000,gamma=1000)
-
-
-#### now your job is to fit the classifier
-#### using the training features/labels, and to
-#### make a set of predictions on the test data
-
-clf.fit(features_train,labels_train);
+from sklearn import tree
+clf = tree.DecisionTreeClassifier()
+clf = clf.fit(features_train, labels_train)
 pred= clf.predict(features_test);
 ### draw the decision boundary with the text points overlaid
 prettyPicture(clf, features_test, labels_test)
