@@ -18,29 +18,32 @@ import pickle
 sys.path.append("tools/")
 from feature_format import featureFormat, targetFeatureSplit
 dictionary = pickle.load( open("tools/final_project_dataset_modified.pkl", "r") )
-print dictionary
 ### list the features you want to look at--first item in the
 ### list will be the "target" feature
+#features_list = ["bonus", "long_term_incentive"]
 features_list = ["bonus", "salary"]
+
 data = featureFormat( dictionary, features_list, remove_any_zeroes=True,sort_keys = "tools/python2_lesson06_keys.pkl")
 target, features = targetFeatureSplit( data )
-print features
 
 
 ### training-testing split needed in regression, just like classification
 from sklearn.cross_validation import train_test_split
 feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 train_color = "b"
-test_color = "b"
+test_color = "r"
 
 reg = linear_model.LinearRegression()
 
     # Train the model using the training sets
 reg.fit(feature_train, target_train)
+prediction = reg.predict(feature_train);
 
-prediction = reg.predict(feature_test);
-print reg.coef_
-print reg.score(feature_train,target_train)
+print reg.coef_[0]
+print reg.score(feature_test,target_test)
+
+#prediction = reg.predict(feature_test);
+
 
 ### Your regression goes here!
 ### Please name it reg, so that the plotting code below picks it up and
@@ -73,6 +76,8 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+reg.fit(feature_test, target_test)
+plt.plot(feature_train, reg.predict(feature_train), color="r")
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
